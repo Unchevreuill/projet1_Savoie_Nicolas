@@ -1,91 +1,53 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <title>Panier d'achat</title>
-    <link rel="stylesheet" type="text/css" href="css/robeafricaine.css">
-
+    <link rel="stylesheet" type="text/css" href="../css/panier.css">
 </head>
-
 <body>
+    <div class="container">
+        <div class="header">
+            <h1>Votre Panier</h1>
+        </div>
 
-    <form method="post">
         <?php
-        include './includes/fonction.php';
+        include '../functions/fonction.php';
+
+        // Initialisation du panier s'il n'existe pas
+        if (!isset($_SESSION['panier'])) {
+            $_SESSION['panier'] = array();
+        }
+
+        // Traitement de la suppression d'un article
         if (isset($_POST['del'])) {
-            delPanier();
-            $_POST['del'] = NULL;
+            delPanier($_POST['del']);
+            // Recharge la page pour mettre à jour l'affichage du panier
+            header("Location: panier.php");
+            exit();
         }
 
-        include './public/header.php';
-        include './includes/data.inc.php';
-
-        $imageContainer = '';
-        if (count($_SESSION['panier']) <= 1) {
-            echo '<p>le panier est vide </p>';
+        // Affichage des articles dans le panier
+        if (count($_SESSION['panier']) == 0) {
+            echo '<p>Le panier est vide</p>';
         } else {
-            $_SESSION['total'] = 0;
-            $num = 1;
+            $total = 0;
+            foreach ($_SESSION['panier'] as $id) {
+                $product = getProductById($id);
 
-            for ($i = 0; $i < count($_SESSION['panier']); $i++) {
-                $total = array_count_values($_SESSION['panier']);
-                foreach ($image as $img) {
-
-                    if ($img['id'] == $_SESSION['panier'][$i]) {
-                        if (str_contains($imageContainer, 'id=' . $img['id'] . '" cl')) {
-                            $_SESSION['total'] += (int)$img['prix'];
-                        } else {
-                            $_SESSION['total'] += (int)$img['prix'];
-                            $total = $total[$img['id']];
-                            $imageContainer .= '
-                            <div class="cardpanier">
-                            <div class="num">' . $num . '</div>
-                            <img class="cardpanierimg" src="' . $img['image'] . '" alt="Card image cap">
-                            <h5 class="card-title">' . $img['titre'] . '</h5>
-                            <p class="card-text">' . $img['description'] . '</p>
-                            <button type="button" name="ajouter" id="ajouter' . $img['id'] . '" class="btn btn-warning" value="' . $img['id'] . '">' . $img['prix'] . '</button>             
-                            <a href="detailimage.php?id=' . $img['id'] . '" class="btn btn-info" id="Details">Details</a>
-                            <button type="submit" class="btn btn-danger del" name="del" id="del" value="' . $img['id']  . '">X</button><div class="total">X ' . $total . '</div>
-                        </div>
-                    </div>';
-                            $num++;
-                        }
-                    }
-                }
+                echo '<div class="product">
+                        <h3>' . htmlspecialchars($product['titre']) . '</h3>
+                        <p>' . htmlspecialchars($product['description']) . '</p>
+                        <p>Prix : ' . htmlspecialchars($product['prix']) . ' €</p>
+                        <form method="post">
+                            <button type="submit" name="del" value="' . htmlspecialchars($id) . '">Supprimer</button>
+                        </form>
+                      </div>';
+                $total += $product['prix'];
             }
-            echo '<div class="totalprice">
-                        <h1>Total Price</h1>
-                        <div class="totalpriceGrid">
-                            <p>Price : </p>
-                            <p>' . $_SESSION['total'] . '$</p>
-                            <p>_____________</p>
-                            <p>_____________</p>
-                            <p>TPS :</p>
-                            <p>+ 5%</p>
-                            <p>TVQ :</p>
-                            <p>+ 9.975%</p>
-                            <p>_____________</p>
-                            <p>_____________</p>
-                            <p>Total :</p>
-                            <p>' . round($_SESSION['total'] * 1.14975, 2) . '$</p>
-                        </div>
-                        <div class="monbutton">
-                        <div id="paypal-payment-button"></div>
-                        
-                        <script src="https://www.paypal.com/sdk/js?client-id=AXjaUSY_rhWv6N5Z8qivSB7NlL88-zKNLwZ-QZohgc59hkkAxW77z5iVsskXWS_hKR08VEW9Qcqw5vWO"></script>
-                        <script src="./public/paypal.js"></script>
-                        </div>
-                        
-                    </div>
-                    
-                    <div class="image-container-panier">' . $imageContainer . '</div>';
+            echo '<div class="total"><p>Total : ' . $total . ' €</p></div>';
         }
-
-
         ?>
-    </form>
-
+    </div>
 </body>
-
 </html>

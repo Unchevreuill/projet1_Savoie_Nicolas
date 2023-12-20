@@ -86,3 +86,33 @@ function trueCo()
     }
     return $inscri;
 }
+function getProductById($productId) {
+    // Connexion à la base de données
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "site_jeux";
+
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+    // Vérifier la connexion
+    if (!$conn) {
+        die("Échec de la connexion : " . mysqli_connect_error());
+    }
+
+    // Préparation de la requête
+    $sql = "SELECT * FROM Product WHERE id = ?";
+    
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $productId);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ($row = mysqli_fetch_assoc($result)) {
+        mysqli_close($conn);
+        return $row;
+    } else {
+        mysqli_close($conn);
+        return null;
+    }
+}

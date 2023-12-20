@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 session_start();
 
 // Connexion à la base de données
@@ -46,4 +46,4 @@ mysqli_close($conn);
     <button type="submit">S'enregistrer</button>
 </form>
 
-<a href="../">Home</a>
+<a href="../">Home</a> -->

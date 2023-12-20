@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.FRMinscription {
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.FRMinscription h1 {
+    text-align: center;
+    color: #333;
+}
+
+.FRMinscription p {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+}
+
+.FRMinscription label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.FRMinscription input[type="text"],
+.FRMinscription input[type="email"],
+.FRMinscription input[type="number"],
+.FRMinscription input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.FRMinscription button {
+    width: 100%;
+    padding: 10px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.FRMinscription button:hover {
+    background-color: #4cae4c;
+}

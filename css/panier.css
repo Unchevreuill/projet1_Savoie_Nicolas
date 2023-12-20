@@ -1,0 +1,64 @@
+/* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* En-tête du panier */
+.header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Style des articles du panier */
+.product {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: white;
+}
+
+.product h3 {
+    margin: 0;
+    color: #333;
+}
+
+/* Bouton pour supprimer un article */
+.product button {
+    background-color: #d9534f;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.product button:hover {
+    background-color: #c9302c;
+}
+
+/* Total du panier */
+.total {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: right;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+    }
+}
+

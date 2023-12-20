@@ -1,0 +1,56 @@
+/* Réinitialisation et styles de base */
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}
+
+/* Barre de navigation */
+.navbar {
+    background-color: #333;
+    color: white;
+    overflow: hidden;
+}
+
+.navbar ul {
+    padding: 10px;
+    text-align: center;
+}
+
+.navbar ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+/* En-tête */
+.header {
+    background: url('header-background.jpg') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    padding: 60px 0;
+}
+
+/* Section des jeux en vedette */
+.featured-games {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Pied de page */
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
