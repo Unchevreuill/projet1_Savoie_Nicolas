@@ -2,7 +2,7 @@
 <?php
 require_once "../config/connexion.php";
 require_once"../functions/crud.php";
-require_once"../functions/functions.php";
+require_once"../functions/fonction.php";
 require_once"../functions/validation.php";
 echo '<h2>Mon $_POST</h2>';
 var_dump($_POST);

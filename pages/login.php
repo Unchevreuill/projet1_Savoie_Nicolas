@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
+    // Utilisation d'une requête préparée pour éviter les injections SQL
     $sql = "SELECT id, password FROM User WHERE email = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $email);
@@ -36,18 +37,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $messageErreur = "Aucun compte trouvé avec cet e-mail";
     }
+    mysqli_stmt_close($stmt);
 }
 
 mysqli_close($conn);
 ?>
 
-<h2>Login</h2>
-<?php if ($messageErreur != "") { echo "<p>$messageErreur</p>"; } ?>
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-    E-mail: <input type="email" name="email" required><br>
-    Mot de passe: <input type="password" name="password" required><br>
-    <input type="submit" value="Connexion">
-</form>
-
-<a href="signup.php">S'enregistrer</a></br>
-<a href="../">Home</a>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="../css/login.css"> 
+</head>
+<body>
+    <div class="login-container">
+        <h2>Connexion</h2>
+        <?php if ($messageErreur != ""): ?>
+            <p class="error-message"><?= htmlspecialchars($messageErreur) ?></p>
+        <?php endif; ?>
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe:</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Connexion">
+            </div>
+        </form>
+        <a href="inscription.php">S'enregistrer</a><br>
+        <a href="../">Home</a>
+    </div>
+</body>
+</html>
