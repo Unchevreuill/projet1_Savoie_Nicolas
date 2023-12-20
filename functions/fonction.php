@@ -88,21 +88,13 @@ function trueCo()
 }
 function getProductById($productId) {
     // Connexion à la base de données
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "site_jeux";
-
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-
-    // Vérifier la connexion
+    $conn = mysqli_connect("localhost", "root", "", "site_jeux");
+    
     if (!$conn) {
         die("Échec de la connexion : " . mysqli_connect_error());
     }
 
-    // Préparation de la requête
-    $sql = "SELECT * FROM Product WHERE id = ?";
-    
+    $sql = "SELECT * FROM produit WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $productId);
     mysqli_stmt_execute($stmt);

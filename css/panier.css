@@ -6,59 +6,52 @@ body {
     padding: 0;
 }
 
+/* Conteneur principal */
 .container {
     width: 80%;
     margin: auto;
-    overflow: hidden;
+    padding: 20px;
 }
 
 /* En-tête du panier */
 .header {
-    background-color: #333;
-    color: white;
-    padding: 10px 0;
     text-align: center;
+    margin-bottom: 20px;
 }
 
-/* Style des articles du panier */
+/* Style des produits dans le panier */
 .product {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: white;
     border: 1px solid #ddd;
-    margin-bottom: 10px;
-    padding: 10px;
-    background: white;
 }
 
-.product h3 {
-    margin: 0;
-    color: #333;
+.product img {
+    width: 100px; 
+    height: auto;
 }
 
-/* Bouton pour supprimer un article */
-.product button {
-    background-color: #d9534f;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+/* Affichage des produits sur 3 colonnes */
+.products-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
-.product button:hover {
-    background-color: #c9302c;
-}
-
-/* Total du panier */
+/* Style pour le total */
 .total {
-    background-color: #333;
-    color: white;
-    padding: 10px;
     text-align: right;
+    margin-top: 20px;
 }
 
 /* Responsive design */
-@media (max-width: 600px) {
-    .container {
-        width: 100%;
+@media (max-width: 768px) {
+    .products-container {
+        grid-template-columns: 1fr;
     }
 }
-

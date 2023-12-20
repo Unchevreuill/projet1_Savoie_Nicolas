@@ -1,3 +1,19 @@
+<?php
+include '../functions/fonction.php';
+
+if (!isset($_SESSION['panier'])) {
+    $_SESSION['panier'] = array();
+}
+
+// Traitement de la suppression d'un article
+if (isset($_POST['del'])) {
+    delPanier($_POST['del']);
+    header("Location: panier.php");
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,43 +27,34 @@
             <h1>Votre Panier</h1>
         </div>
 
-        <?php
-        include '../functions/fonction.php';
+        <div class="products-container">
+            <?php
+            if (count($_SESSION['panier']) == 0) {
+                echo '<p>Le panier est vide</p>';
+            } else {
+                $total = 0;
+                foreach ($_SESSION['panier'] as $id => $quantity) {
+                    $product = getProductById($id);
 
-        // Initialisation du panier s'il n'existe pas
-        if (!isset($_SESSION['panier'])) {
-            $_SESSION['panier'] = array();
-        }
+                    echo '<div class="product">';
+                    echo '<img src="../images/' . $product['url_img'] . '" alt="' . htmlspecialchars($product['name']) . '">';
+                    echo '<div class="product-details">';
+                    echo '<h3>' . htmlspecialchars($product['name']) . '</h3>';
+                    echo '<p>' . htmlspecialchars($product['description']) . '</p>';
+                    echo '<p>Prix unitaire : ' . htmlspecialchars($product['price']) . ' €</p>';
+                    echo '<p>Quantité : ' . $quantity . '</p>';
+                    echo '</div>';
+                    echo '<form method="post">';
+                    echo '<button type="submit" name="del" value="' . htmlspecialchars($id) . '">Supprimer</button>';
+                    echo '</form>';
+                    echo '</div>';
 
-        // Traitement de la suppression d'un article
-        if (isset($_POST['del'])) {
-            delPanier($_POST['del']);
-            // Recharge la page pour mettre à jour l'affichage du panier
-            header("Location: panier.php");
-            exit();
-        }
-
-        // Affichage des articles dans le panier
-        if (count($_SESSION['panier']) == 0) {
-            echo '<p>Le panier est vide</p>';
-        } else {
-            $total = 0;
-            foreach ($_SESSION['panier'] as $id) {
-                $product = getProductById($id);
-
-                echo '<div class="product">
-                        <h3>' . htmlspecialchars($product['titre']) . '</h3>
-                        <p>' . htmlspecialchars($product['description']) . '</p>
-                        <p>Prix : ' . htmlspecialchars($product['prix']) . ' €</p>
-                        <form method="post">
-                            <button type="submit" name="del" value="' . htmlspecialchars($id) . '">Supprimer</button>
-                        </form>
-                      </div>';
-                $total += $product['prix'];
+                    $total += $product['price'] * $quantity;
+                }
+                echo '<div class="total"><p>Total : ' . $total . ' €</p></div>';
             }
-            echo '<div class="total"><p>Total : ' . $total . ' €</p></div>';
-        }
-        ?>
+            ?>
+        </div>
     </div>
 </body>
 </html>

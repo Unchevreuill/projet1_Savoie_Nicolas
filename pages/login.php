@@ -20,16 +20,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
     // Utilisation d'une requête préparée pour éviter les injections SQL
-    $sql = "SELECT id, password FROM User WHERE email = ?";
+    $sql = "SELECT id, pwd FROM user WHERE email = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $email);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
     if ($row = mysqli_fetch_assoc($result)) {
-        if (password_verify($password, $row['password'])) {
+        if (password_verify($password, $row['pwd'])) {
             $_SESSION['user_id'] = $row['id'];
-            header("Location: index.php");
+            header("Location: index.php"); // Redirige vers la page d'accueil après la connexion réussie
             exit();
         } else {
             $messageErreur = "Mot de passe incorrect";

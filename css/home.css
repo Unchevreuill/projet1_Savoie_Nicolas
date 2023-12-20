@@ -1,14 +1,10 @@
-/* Réinitialisation et styles de base */
-body, h1, h2, p, ul, li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
+/* Styles de base */
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
     background-color: #f4f4f4;
+    color: black;
+    margin: 0;
+    padding: 0;
 }
 
 /* Barre de navigation */
@@ -16,10 +12,12 @@ body {
     background-color: #333;
     color: white;
     overflow: hidden;
+    padding: 10px 0;
 }
 
 .navbar ul {
-    padding: 10px;
+    list-style: none;
+    padding: 0;
     text-align: center;
 }
 
@@ -31,20 +29,46 @@ body {
 .navbar ul li a {
     color: white;
     text-decoration: none;
+    padding: 5px 10px;
+}
+
+.navbar ul li a:hover {
+    background-color: #ddd;
+    color: black;
 }
 
 /* En-tête */
 .header {
-    background: url('header-background.jpg') no-repeat center center/cover;
-    color: white;
+    background-color: #eee;
+    color: black;
     text-align: center;
-    padding: 60px 0;
+    padding: 20px 0;
 }
 
-/* Section des jeux en vedette */
+/* Section Jeux en Vedette */
 .featured-games {
-    padding: 20px;
     text-align: center;
+    padding: 20px;
+    background-color: white;
+}
+
+.games-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.game {
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #fff;
+}
+
+.game img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
 }
 
 /* Pied de page */
