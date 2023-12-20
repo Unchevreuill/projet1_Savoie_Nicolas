@@ -3,9 +3,9 @@ session_start();
 
 // Connexion à la base de données
 $servername = "localhost";
-$username = "votre_nom_utilisateur";
-$password = "votre_mot_de_passe";
-$dbname = "nom_de_votre_base_de_donnees";
+$username = "root";
+$password = "";
+$dbname = "site_jeux";
 
 // Créer une connexion
 $conn = mysqli_connect($servername, $username, $password, $dbname);
