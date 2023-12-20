@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <title>Formulaire d'inscription</title>
     <link rel="stylesheet" href="../css/inscription.css">
 </head>
-
 <body>
 
     <?php
     include '../functions/fonction.php';
 
-    // Connexion à la base de données
     $serveur = "localhost";
     $username = "root";
     $password = "";
@@ -24,20 +21,16 @@
     }
 
     if (isset($_POST['submit'])) {
-        $nom = mysqli_real_escape_string($connexion, $_POST['nom']);
-        $prenom = mysqli_real_escape_string($connexion, $_POST['prenom']);
-        $telephone = mysqli_real_escape_string($connexion, $_POST['telephone']);
         $email = mysqli_real_escape_string($connexion, $_POST['email']);
         $password = mysqli_real_escape_string($connexion, $_POST['password']);
-
+        $username = mysqli_real_escape_string($connexion, $_POST['username']); // Ajouté username
         $password = password_hash($password, PASSWORD_DEFAULT);
 
         // Validation des champs
-        if (empty($nom) || empty($prenom) || empty($email) || empty($telephone) || empty($password)) {
+        if (empty($email) || empty($password) || empty($username)) {
             echo "<script>alert('Veuillez remplir tous les champs.');</script>";
         } else {
-            // Requête pour vérifier si l'email existe déjà
-            $emailExistsQuery = "SELECT COUNT(*) FROM infoutilisateur WHERE email = ?";
+            $emailExistsQuery = "SELECT COUNT(*) FROM user WHERE email = ?";
             $stmt = $connexion->prepare($emailExistsQuery);
             $stmt->bind_param('s', $email);
             $stmt->execute();
@@ -48,10 +41,10 @@
             if ($emailCount > 0) {
                 echo "<script>alert('Cet email est déjà enregistré.');</script>";
             } else {
-                // Requête pour insérer l'utilisateur
-                $requeteSQL = "INSERT INTO infoutilisateur (nom, prenom, telephone, email, passwords) VALUES (?, ?, ?, ?, ?)";
+                // Ajout de valeurs par défaut pour Billing_adress, role_id et shipping_address
+                $requeteSQL = "INSERT INTO user (email, pwd, username, Billing_adress, role_id, shipping_address) VALUES (?, ?, ?, 1, 2, 1)";
                 $stmt = $connexion->prepare($requeteSQL);
-                $stmt->bind_param('sssss', $nom, $prenom, $telephone, $email, $password);
+                $stmt->bind_param('sss', $email, $password, $username);
                 $resultat = $stmt->execute();
                 if ($resultat) {
                     echo "<script>alert('Utilisateur enregistré.');</script>";
@@ -67,14 +60,10 @@
         <form action="inscription.php" method="POST">
             <h1><u>Bienvenue!</u></h1>
             <p>Veuillez remplir les champs suivants!</p>
-            <label for="nom">Nom: </label><br>
-            <input type="text" name="nom" id="nom" required><br><br>
-            <label for="prenom">Prenom: </label><br>
-            <input type="text" name="prenom" id="prenom" required><br><br>
+            <label for="username">Nom d'utilisateur: </label><br>
+            <input type="text" name="username" id="username" required><br><br>
             <label for="email">Email: </label><br>
             <input type="email" name="email" id="email" required><br><br>
-            <label for="telephone">Numero de telephone: </label><br>
-            <input type="number" name="telephone" id="telephone" required><br><br>
             <label for="password">Mot de passe: </label><br>
             <input type="password" name="password" id="password" required><br><br>
 
