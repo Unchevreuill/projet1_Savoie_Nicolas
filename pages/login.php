@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($row = mysqli_fetch_assoc($result)) {
         if (password_verify($password, $row['pwd'])) {
             $_SESSION['user_id'] = $row['id'];
-            header("Location: index.php"); // Redirige vers la page d'accueil après la connexion réussie
+            header("Location: home.php"); // Redirige vers la page d'accueil après la connexion réussie
             exit();
         } else {
             $messageErreur = "Mot de passe incorrect";

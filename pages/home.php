@@ -42,6 +42,11 @@ if (isset($_POST['ajouter_au_panier'])) {
             <li><a href="panier.php">Panier</a></li>
             <li><a href="inscription.php">Inscription</a></li>
             <li><a href="login.php">Connexion</a></li>
+            <?php
+            if (isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
+                echo '<li><a href="gestion.php">Gestion</a></li>';
+            }
+?>
         </ul>
     </nav>
 
