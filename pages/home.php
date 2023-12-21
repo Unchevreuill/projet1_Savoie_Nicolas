@@ -36,19 +36,29 @@ if (isset($_POST['ajouter_au_panier'])) {
     <link rel="stylesheet" href="../css/home.css">
 </head>
 <body>
-    <nav class="navbar">
+<nav class="navbar">
         <ul>
             <li><a href="produit.php">Produits</a></li>
             <li><a href="panier.php">Panier</a></li>
-            <li><a href="inscription.php">Inscription</a></li>
-            <li><a href="login.php">Connexion</a></li>
             <?php
-            if (isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
-                echo '<li><a href="gestion.php">Gestion</a></li>';
+            if (isset($_SESSION['user_id'])) {
+                // L'utilisateur est connecté
+                echo '<li><a href="profil.php">Profil</a></li>';
+                if (isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
+                    // L'utilisateur est un admin
+                    echo '<li><a href="gestion.php">Gestion</a></li>';
+                }
+                echo '<li><a href="logout.php">Déconnexion</a></li>';
+            } else {
+                // L'utilisateur n'est pas connecté
+                echo '<li><a href="inscription.php">Inscription</a></li>';
+                echo '<li><a href="login.php">Connexion</a></li>';
             }
-?>
+            ?>
         </ul>
     </nav>
+
+
 
     <header class="header">
         <h1>Bienvenue sur notre site de jeux vidéo !</h1>
